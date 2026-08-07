@@ -2,3 +2,10 @@ venv/
 .env
 __pycache__/
 *.pyc
+oracleJdk-26/
+*.mp4
+*.zip
+*.tar
+*.bin
+venv/
+__pycache__/
