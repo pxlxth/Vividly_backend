@@ -8,7 +8,7 @@ def check_blur(image):
     variance = cv2.Laplacian(gray, cv2.CV_64F).var()
     print(f"Blur score: {variance}")
 
-    MIN_VARIANCE = 50
+    MIN_VARIANCE = 35
 
     if variance < MIN_VARIANCE:
         return {

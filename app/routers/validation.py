@@ -9,6 +9,13 @@ from app.services.supabase_service import (
 from app.services.file_service import save_uploaded_image
 
 router = APIRouter()
+def get_storage_path(url: str) -> str:
+    marker = "/storage/v1/object/public/lesson-videos/"
+
+    if marker in url:
+        return url.split(marker, 1)[1]
+
+    return url
 
 @router.get("/health")
 def health():
@@ -68,7 +75,7 @@ async def generate_video(
 
         local_video = download_video(
             bucket="lesson-videos",
-            remote_path=video_path,
+            remote_path=get_storage_path(video_path),
             local_path="storage/videos/base_video.mp4",
         )
         local_image = save_uploaded_image(file)
@@ -78,5 +85,6 @@ async def generate_video(
         )
 
         return {
-            "video_url": "http://192.168.100.13:8000/storage/outputs/result.mp4"
+            "success": True,
+            "video_url": f"http://35.184.12.66:8000/storage/outputs/{output_video.split('/')[-1]}"
         }

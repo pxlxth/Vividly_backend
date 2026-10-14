@@ -47,7 +47,7 @@ def detect_faces(image):
             "message": "More than one face detected.",
             "face_count": face_count,
         }
-    MIN_FACE_PERCENTAGE = 15
+    MIN_FACE_PERCENTAGE = 8
 
     if face_percentage < MIN_FACE_PERCENTAGE:
         return {

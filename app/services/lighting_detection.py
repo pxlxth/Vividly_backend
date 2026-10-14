@@ -8,7 +8,7 @@ def check_lighting(image):
 
     brightness = np.mean(gray)
 
-    MIN_BRIGHTNESS = 60
+    MIN_BRIGHTNESS = 45
     MAX_BRIGHTNESS = 190
 
     if brightness < MIN_BRIGHTNESS:

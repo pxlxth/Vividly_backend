@@ -9,3 +9,6 @@ oracleJdk-26/
 *.bin
 venv/
 __pycache__/
+# Archivos generados durante el procesamiento
+storage/outputs/
+storage/uploads/

@@ -1,14 +1,15 @@
 import subprocess
+import uuid
+
 from pathlib import Path
 
-FACEFUSION_PATH = Path(
-    r"C:\Users\CSAENCUser\Desktop\Facefusion app\facefusion"
-)
-PYTHON_EXECUTABLE = r"C:\Users\CSAENCUser\miniconda3\python.exe"
+FACEFUSION_PATH = Path("/home/doriamedinarojascarla/facefusion")
+PYTHON_EXECUTABLE = "python3"
 
 BASE_DIR = Path(__file__).resolve().parents[2]
 
-OUTPUT_VIDEO = BASE_DIR / "storage" / "outputs" / "result.mp4"
+unique_id = str(uuid.uuid4())
+OUTPUT_VIDEO = BASE_DIR / "storage" / "outputs" / f"result_{unique_id}.mp4"
 
 
 def run_facefusion(
@@ -40,6 +41,7 @@ def run_facefusion(
         capture_output=True,
         text=True
     )
+
     print("RETURN CODE:", result.returncode)
     print("STDOUT:")
     print(result.stdout)
@@ -49,4 +51,25 @@ def run_facefusion(
     if result.returncode != 0:
         raise Exception(result.stderr)
 
-    return str(OUTPUT_VIDEO)
+    import os
+
+    final_output = str(OUTPUT_VIDEO).replace(".mp4", "_final.mp4")
+
+    subprocess.run([
+        "ffmpeg",
+        "-y",
+        "-i", str(OUTPUT_VIDEO),
+        "-i", target_video,
+        "-map", "0:v:0",
+        "-map", "1:a:0",
+        "-c:v", "copy",
+        "-c:a", "aac",
+        "-shortest",
+        final_output
+    ])
+
+    import os
+    print("FINAL:", final_output)
+    print("EXISTE FINAL?:", os.path.exists(final_output))
+
+    return final_output

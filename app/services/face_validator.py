@@ -24,8 +24,8 @@ async def validate_uploaded_image(file: UploadFile):
 
     height, width = image.shape[:2]
 
-    MIN_WIDTH = 512
-    MIN_HEIGHT = 512
+    MIN_WIDTH = 256
+    MIN_HEIGHT = 256
 
     if width < MIN_WIDTH or height < MIN_HEIGHT:
         return {
@@ -73,7 +73,7 @@ async def validate_uploaded_image(file: UploadFile):
 
     if not position_result["valid"]:
         return position_result
-    
+
     insight_result = check_insightface(image)
     if not insight_result["valid"]:
         return insight_result
@@ -84,4 +84,4 @@ async def validate_uploaded_image(file: UploadFile):
         "height": height,
         "message": "Image loaded successfully."
     }
-    
+
